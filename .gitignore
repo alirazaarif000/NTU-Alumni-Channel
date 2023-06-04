@@ -1,0 +1,19 @@
+# Files to be ignore:
+
+backend/node_modules
+frontend/node_modules
+
+backend/.env
+frontend/.env
+
+# backend/.env variables:
+
+# MONGODB_URL = <local | Online URL>
+# ACCESS_TOKEN_SECRET = itissecret
+# REFRESH_TOKEN_SECRET = itisalsosecret
+
+# frontend/.env variables:
+
+# REACT_APP_UPLOAD_PRESET=<upload-preset>
+# REACT_APP_CLOUD_NAME=<cloud-name>
+# REACT_APP_CLOUDNIARY_URL=<https://api.cloudinary.com/v1_1/<**cloud-name**>/image/upload>

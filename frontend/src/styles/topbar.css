@@ -1,0 +1,17 @@
+.topbar {
+    height: 80px;
+    background: var(--linear-gradient);
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.logo-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    cursor: pointer;
+    color: #fff;
+}

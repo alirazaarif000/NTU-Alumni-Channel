@@ -1,0 +1,236 @@
+.profile {
+    width: 100%;
+    min-height: calc(100vh - 80px - 20px);
+}
+
+/* #region info component */
+.info {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px 10px;
+}
+
+.info_container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.info_content {
+    min-width: 250px;
+    max-width: 600px;
+    width: 100%;
+    flex: 1;
+    opacity: 0.7;
+    margin: 0 15px;
+}
+
+.info_content_title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.info_content_title h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    transform: translateY(4px);
+    flex: 3;
+}
+
+.info_content_title button {
+    flex: 2;
+}
+
+.info_container .follow_btn {
+    color: var(--c1);
+    cursor: pointer;
+}
+
+.info_container .follow_btn span {
+    margin-right: 15px;
+    transition: all 3s ease-in;
+}
+
+/* .info_container .follow_btn span:hover {
+    text-decoration: underline;
+} */
+
+/* #endregion */
+
+
+/* #region edit profile component */
+
+.edit_profile,
+.edit_password {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0008;
+    z-index: 9;
+    overflow: auto;
+    padding: 10px;
+}
+
+.edit_profile form {
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    margin: 20px auto;
+    background: var(--linear-gradient);
+    max-width: 768px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.edit_password form {
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    margin: 20px auto;
+    background: var(--linear-gradient);
+    max-width: 500px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.edit_profile .btn_close,
+.edit_password .btn_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.edit_profile .info_avatar {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    margin: 15px auto;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.edit_profile .info_avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.edit_profile .info_avatar span {
+    position: absolute;
+    bottom: -15%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+    background: #000;
+}
+
+.edit_profile .info_avatar #file_up {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+::-webkit-file-upload-button {
+    cursor: pointer;
+}
+
+.edit_profile form textarea {
+    border-radius: 5px;
+}
+
+.edit_profile .form-button {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    background: #fff;
+    color: #2980b9;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* #endregion */
+
+
+/* #region follow */
+.follow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0008;
+    width: 100%;
+    height: 100vh;
+    z-index: 4;
+}
+
+.follow_box {
+    min-width: 300px;
+    min-height: 300px;
+    border: 1px solid #222;
+    border-radius: 5px;
+    background: white;
+    padding: 20px 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+
+.follow_box .follow_box-heading {
+    color: var(--c1);
+}
+
+.follow_box .close {
+    position: absolute;
+    top: 0;
+    right: 8px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: black;
+}
+
+/* #endregion */
+
+
+/* #region profile tabs */
+.profile_tab {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.profile_tab button {
+    outline: none;
+    border: none;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 5px 20px;
+    margin: 0 25px;
+    opacity: 0.5;
+}
+
+.profile_tab button.active {
+    border-bottom: 4px solid var(--c1);
+    border-radius: 10px;
+    opacity: 0.8;
+}
+
+/* #endregion */
