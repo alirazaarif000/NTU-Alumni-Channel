@@ -140,9 +140,7 @@ const LeftSide = ({ setShowChats }) => {
               handleAddUser(user)
             }}
           >
-            <UserCard user={user} msg={true} >
-              <i className="fas fa-circle" />
-            </UserCard>
+            <UserCard user={user} msg={true}/>
           </div>
         )) : <div className='text-center mt-3 fw-bold text-muted'>Try Search to chat with friends.</div>}
 

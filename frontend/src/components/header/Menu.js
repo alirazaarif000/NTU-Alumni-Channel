@@ -5,20 +5,26 @@ import { logout } from "../../redux/actions/authAction";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import Avatar from "../Avatar";
 import NotifyModal from "../NotifyModal";
+import { isReadNotify } from "../../redux/actions/notifyAction";
 
 const Menu = () => {
   const navLinks = [
     { label: "Home", icon: "home", path: "/" },
-    { label: "Message", icon: "near_me", path: "/message" },
     { label: "Discover", icon: "explore", path: "/discover" },
   ];
 
-  const { auth, theme, notify } = useSelector((state) => state);
+  const { auth, notify } = useSelector((state) => state);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
+  const handleReadTextMessags = () => {
+    dispatch(isReadNotify({ auth, textMessage: true, notify }));
+  };
+
   const isActive = (pn) => {
-    if (pn === pathname) return "active";
+    if (pn === "/") {
+      if (pathname === pn) return "active";
+    } else if (pathname.includes(pn)) return "active";
   };
 
   return (
@@ -30,6 +36,31 @@ const Menu = () => {
           </Link>
         </li>
       ))}
+      {(() => {
+        const textMessages = notify.data.filter((msg) => msg.type === "textMessage");
+        const unreadTextMessages = textMessages.filter((msg) => !msg.isRead);
+
+        if (unreadTextMessages.length > 0) {
+          return (
+            <li
+              className={`header-navbar-li px-1 px-sm-2 ${isActive("/message")}`}
+              onClick={() => handleReadTextMessags()}
+            >
+              <Link to={`${unreadTextMessages[0].url}`}>
+                <span className="material-icons d-flex dot">near_me</span>
+              </Link>
+            </li>
+          );
+        }
+
+        return (
+          <li className={`header-navbar-li px-1 px-sm-2 ${isActive("/message")}`}>
+            <Link to="/message">
+              <span className="material-icons d-flex">near_me</span>
+            </Link>
+          </li>
+        );
+      })()}
 
       <li className="dropdown">
         <span
@@ -40,14 +71,21 @@ const Menu = () => {
           aria-expanded="false"
         >
           <span
-            style={{ color: notify.data.length > 0 ? "var(--c1)" : "" }}
+            style={{
+              color: notify.data.some((msg) => msg.type !== "textMessage")
+                ? "var(--c1)"
+                : "",
+            }}
             className={`material-icons d-flex`}
           >
             notifications
           </span>
-          <span className="notify_length">{notify.data.length}</span>
+          {notify.data.some((msg) => msg.type !== "textMessage" && !msg.isRead) &&
+            <span className="notify_length">
+              {notify.data.filter((msg) => msg.type !== "textMessage" && !msg.isRead).length}
+            </span>
+          }
         </span>
-
         <div className="dropdown-menu notification-box mx-2" aria-labelledby="navbarDropdown">
           <NotifyModal />
         </div>
@@ -63,8 +101,8 @@ const Menu = () => {
         >
           <Avatar src={auth.user.avatar} size="medium-avatar" />
         </span>
-        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li className="pb-2 border-bottom">
+        <ul className="dropdown-menu text-start" aria-labelledby="navbarDropdown">
+          <li className="mb-1">
             <Link
               className={`dropdown-item rounded ${isActive(`/profile/${auth.user._id}`)}`}
               to={`/profile/${auth.user._id}`}
@@ -72,7 +110,7 @@ const Menu = () => {
               Profile
             </Link>
           </li>
-          <li>
+          <li className="mt-1">
             <Link
               className="dropdown-item rounded"
               to="/"

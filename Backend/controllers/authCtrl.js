@@ -11,6 +11,9 @@ const authCtrl = {
         email,
         password,
         gender,
+        cnic,
+        regno,
+
         userType,
         // Teacher
         department,
@@ -19,11 +22,11 @@ const authCtrl = {
 
         // Alumni
         degree,
-        batch,
+        // batch,
         passingYear,
 
         // Student
-        university,
+        // university,
         major,
         semester,
       } = req.body;
@@ -33,6 +36,16 @@ const authCtrl = {
       const user_name = await Users.findOne({ username: newUserName });
       if (user_name) {
         return res.status(400).json({ msg: "This username is already taken." });
+      }
+
+      const user_cnic = await Users.findOne({ cnic });
+      if (user_cnic) {
+        return res.status(400).json({ msg: "This CNIC is already exists." });
+      }
+
+      const user_regno = await Users.findOne({ regno });
+      if (user_regno && regno !== "") {
+        return res.status(400).json({ msg: "This registeration number already exists." });
       }
 
       const user_email = await Users.findOne({ email });
@@ -48,6 +61,7 @@ const authCtrl = {
           .json({ msg: "Password must be at least 6 characters long." });
       }
 
+
       const passwordHash = await bcrypt.hash(password, 12);
 
       let newUserObj = {
@@ -57,16 +71,16 @@ const authCtrl = {
         password: passwordHash,
         gender,
         userType: userType,
+        cnic,
+        regno: "",
 
         department: "",
         designation: "",
         qualification: "",
 
         degree: "",
-        batch: "",
         passingYear: "",
-        
-        university: "",
+
         major: "",
         semester: "",
       }
@@ -82,13 +96,13 @@ const authCtrl = {
         newUserObj = {
           ...newUserObj,
           degree,
-          batch,
+          regno,
           passingYear,
         }
       } else if (userType === "student") {
         newUserObj = {
           ...newUserObj,
-          university,
+          regno,
           major,
           semester,
         }
@@ -99,29 +113,29 @@ const authCtrl = {
       }
 
       const newUser = new Users(newUserObj);
-      const access_token = createAccessToken({ id: newUser._id });
-      const refresh_token = createRefreshToken({ id: newUser._id });
-
-      res.cookie("refreshtoken", refresh_token, {
-        httpOnly: true,
-        path: "/api/refresh_token",
-        maxAge: 30 * 24 * 60 * 60 * 1000, //validity of 30 days
-      });
-
       await newUser.save();
 
       // res.json({ msg: "registered" });
 
       res.json({
         msg: "Registered Successfully!",
-        access_token,
-        user: {
-          ...newUser._doc,
-          password: "",
-        },
       });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      let errorMessage = "";
+
+      if (err.errors) {
+        // Iterate over the validation errors
+        for (let key in err.errors) {
+          if (err.errors.hasOwnProperty(key)) {
+            errorMessage = err.errors[key].message;
+            break; // Stop iterating after the first error
+          }
+        }
+      } else {
+        errorMessage = err.message;
+      }
+
+      return res.status(500).json({ msg: errorMessage });
     }
   },
 
@@ -144,7 +158,8 @@ const authCtrl = {
 
       const newPasswordHash = await bcrypt.hash(newPassword, 12);
 
-      await Users.findOneAndUpdate({ _id: req.user._id }, { password: newPasswordHash });
+      await Users.findOneAndUpdate({ _id: req.user._id }, { password: newPasswordHash },
+        );
 
       res.json({ msg: "Password updated successfully." })
 
@@ -193,7 +208,21 @@ const authCtrl = {
 
       res.json({ msg: "Admin Registered Successfully." });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      let errorMessage = "";
+
+      if (err.errors) {
+        // Iterate over the validation errors
+        for (let key in err.errors) {
+          if (err.errors.hasOwnProperty(key)) {
+            errorMessage = err.errors[key].message;
+            break; // Stop iterating after the first error
+          }
+        }
+      } else {
+        errorMessage = err.message;
+      }
+
+      return res.status(500).json({ msg: errorMessage });
     }
   },
 
@@ -215,7 +244,7 @@ const authCtrl = {
         return res.status(400).json({ msg: "Email or Password is incorrect." });
       }
 
-      if (user.status !== "enabled") {
+      if (user.status !== "verified") {
         return res.status(400).json({ msg: "Your account is disabled. Please contact the administrator." });
       }
 
@@ -257,10 +286,10 @@ const authCtrl = {
         return res.status(400).json({ msg: "Email or Password is incorrect." });
       }
 
-      if (user.status !== "enabled") {
+      if (user.status !== "verified") {
         return res.status(400).json({ msg: "Your account is disabled. Please contact the administrator." });
       }
-      
+
       const access_token = createAccessToken({ id: user._id });
       const refresh_token = createRefreshToken({ id: user._id });
 

@@ -48,7 +48,7 @@ const UserCard = ({
                 </>
               ) : (
                 <>
-                  <span>{user.fullname}</span>
+                  <span>{truncatedUsername(user.fullname)}</span>
                   {user.userType && <span className='ms-1 text-muted' style={{ fontSize: "10px" }}>~{user.userType}</span>}
                 </>
               )}

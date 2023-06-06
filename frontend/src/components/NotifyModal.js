@@ -47,12 +47,11 @@ const NotifyModal = () => {
 
       <hr className="my-2" />
 
-      {notify.data.length === 0 && (
-        <div className="text-muted text-center py-3">No Notifications</div>
-      )}
-
       <div style={{ maxHeight: "calc(100vh - 200px)", overflow: "auto" }}>
-        {notify.data.map((msg, index) => (
+  {notify.data.some((msg) => msg.type !== "textMessage") ? (
+    notify.data.map((msg, index) => {
+      if (msg.type !== "textMessage") {
+        return (
           <div className="px-2 mb-3" key={index}>
             <Link
               to={`${msg.url}`}
@@ -78,8 +77,15 @@ const NotifyModal = () => {
               {!msg.isRead && <i className="fas fa-circle color-c1" />}
             </small>
           </div>
-        ))}
-      </div>
+        );
+      }
+      return null;
+    })
+  ) : (
+    <div className="text-muted text-center py-3">No Notifications</div>
+  )}
+</div>
+
 
       <hr className="my-2" />
 

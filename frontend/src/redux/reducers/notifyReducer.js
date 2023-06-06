@@ -8,7 +8,7 @@ const initialState = {
 }
 
 
-const authReducer = (state = initialState , action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case NOTIFY_TYPES.GET_NOTIFIES:
       return {
@@ -41,6 +41,12 @@ const authReducer = (state = initialState , action) => {
           (item) =>
             item.id !== action.payload.id || item.url !== action.payload.url
         ),
+      };
+
+    case NOTIFY_TYPES.UPDATE_MESSGAE_NOTIFY:
+      return {
+        ...state,
+        data: action.payload
       };
 
     case NOTIFY_TYPES.DELETE_ALL_NOTIFICATIONS:

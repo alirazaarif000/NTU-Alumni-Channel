@@ -1,5 +1,6 @@
 import { GLOBALTYPES } from "./globalTypes";
 import { postDataAPI, getDataAPI } from "../../utils/fetchData";
+import { createNotify } from "./notifyAction";
 
 
 export const MESSAGE_TYPES = {
@@ -22,7 +23,18 @@ export const addMessage = ({ msg, auth, socket }) => async (dispatch) => {
 
   try {
     const response = await postDataAPI('message', msg, auth.token);
-    const { conversationId } = response.data;
+    const { conversationId, recipient  } = await response.data;
+
+    const msgNotify = {
+      id: auth.user._id,
+      text: 'message you.',
+      recipients: [recipient],
+      url: `/message/${auth.user._id}`,
+      type: "textMessage"
+    };
+
+    dispatch(createNotify({ msg: msgNotify, auth, socket }));
+
     return { conversationId };
   } catch (err) {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg } });

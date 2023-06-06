@@ -1,10 +1,9 @@
 const Notifies = require('../models/notifyModel');
 
-
 const notifyCtrl = {
   createNotify: async (req, res) => {
     try {
-      const { id, recipients, url, text, content, image } = req.body;
+      const { id, recipients, url, text, content, type, image } = req.body;
 
       if (recipients.includes(req.user._id.toString())) return;
 
@@ -15,6 +14,7 @@ const notifyCtrl = {
         text,
         content,
         image,
+        type,
         user: req.user._id,
       });
 
@@ -41,8 +41,21 @@ const notifyCtrl = {
     try {
       const notifies = await Notifies.find({ recipients: req.user._id })
         .sort("-createdAt")
-        .populate("user", "avatar username");
+        .populate("user", "avatar username type");
 
+      return res.json({ notifies });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  isReadAllMessageNotify: async (req, res) => {
+    try {
+      const notifies = await Notifies.updateMany(
+        { recipients: req.user._id, type: "textMessage" },
+        { isRead: true },
+      );
+    
       return res.json({ notifies });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -55,7 +68,7 @@ const notifyCtrl = {
         { _id: req.params.id },
         {
           isRead: true,
-        }
+        },
       );
 
       return res.json({ notifies });

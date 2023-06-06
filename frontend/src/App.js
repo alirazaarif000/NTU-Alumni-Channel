@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import io from 'socket.io-client'
-
 import PageRender from "./customRouter/PageRender";
 import PrivateRouter from "./customRouter/PrivateRouter";
 import Login from "./pages/login";
@@ -26,11 +25,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refreshToken());
-
-    const socket = io();
-    dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
-    return () => socket.close()
+      dispatch(refreshToken());
+      const socket = io();
+      dispatch({ type: GLOBALTYPES.SOCKET, payload: socket })
+      return () => socket.close()
   }, [dispatch]);
 
 

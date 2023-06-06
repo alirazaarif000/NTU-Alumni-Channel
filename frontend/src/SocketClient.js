@@ -105,7 +105,7 @@ const SocketClient = () => {
         msg.user.username + " " + msg.text,
         msg.user.avatar,
         msg.url,
-        "CAMPUS CONNECT"
+        "NTU ALUMNI"
       );
     });
     return () => socket.off("createNotifyToClient");

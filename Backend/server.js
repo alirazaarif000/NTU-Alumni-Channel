@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const SocketServer = require('./socketServer');
+
 const corsOptions = {
   Credential: 'true',
-  
 };
 
 
@@ -38,6 +38,7 @@ app.use('/api', require('./routes/commentRouter'));
 app.use('/api', require('./routes/adminRouter'));
 app.use('/api', require('./routes/notifyRouter'));
 app.use('/api', require('./routes/messageRouter'));
+app.use('/api', require('./routes/jobsRouter'));
 //#endregion
 
 

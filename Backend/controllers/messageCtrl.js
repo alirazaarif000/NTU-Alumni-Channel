@@ -22,7 +22,8 @@ const messageCtrl = {
   createMessage: async (req, res) => {
     try {
       const { recipient, text, media } = req.body;
-      if (!recipient || (!text.trim() && media.length === 0)) return;
+      if (!recipient || (!text.trim() && media.length === 0))
+        return res.status(400).json({ msg: "Invalid data!" });
 
       const newConversation = await Conversations.findOneAndUpdate(
         {
@@ -49,7 +50,7 @@ const messageCtrl = {
 
       await newMessage.save();
 
-      res.json({ msg: "Created.", conversationId: newMessage.conversation});
+      res.json({ msg: "Created.", conversationId: newMessage.conversation, recipient });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

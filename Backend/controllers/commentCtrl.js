@@ -46,7 +46,7 @@ const commentCtrl = {
 
       await Comments.findOneAndUpdate(
         { _id: req.params.id, user: req.user._id },
-        { content }
+        { content },
       );
 
       res.json({ msg: "updated successfully." });
@@ -74,7 +74,7 @@ const commentCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       res.json({ msg: "Comment liked successfully." });
@@ -92,7 +92,7 @@ const commentCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       res.json({ msg: "Comment unliked successfully." });
@@ -113,7 +113,8 @@ const commentCtrl = {
 
       await Posts.findOneAndUpdate({_id: comment.postId}, {
         $pull: {comments: req.params.id}
-      });
+      },
+      );
       res.json({msg: "Comment deleted successfully."});
       
     } catch (err) {

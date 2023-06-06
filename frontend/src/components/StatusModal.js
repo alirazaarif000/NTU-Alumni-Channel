@@ -72,7 +72,7 @@ const StatusModal = () => {
   };
 
   const handleStopStream = () => {
-    tracks.stop();
+    tracks?.stop();
     setStream(false);
   };
 
@@ -94,7 +94,7 @@ const StatusModal = () => {
     setContent("");
     setImages([]);
     if (tracks) {
-      tracks.stop();
+      tracks?.stop();
     }
     dispatch({
       type: GLOBALTYPES.STATUS,

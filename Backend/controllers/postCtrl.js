@@ -83,7 +83,8 @@ const postCtrl = {
         {
           content,
           images,
-        }
+        },
+        { runValidators: true } // Enable validations
       )
         .populate("user likes", "avatar username fullname")
         .populate({
@@ -126,7 +127,7 @@ const postCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       if (!like) {
@@ -148,7 +149,7 @@ const postCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       if (!like) {
@@ -261,7 +262,7 @@ const postCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       if (!report) {
@@ -293,7 +294,7 @@ const postCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       if (!save) {
@@ -315,7 +316,7 @@ const postCtrl = {
         },
         {
           new: true,
-        }
+        },
       );
 
       if (!save) {

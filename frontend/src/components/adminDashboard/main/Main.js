@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 
 import Dashboard from "../dashboard/Dashboard";
-import AdminManagement from "../adminsManagement/AdminsManagement";
 import RegisterAdmin from "../addNewAdmin/RegisterAdmin";
 import NotFound from "../../NotFound";
 import AdminProfile from "../adminProfile/AdminProfile";
 import Spam from "../spamManagement/Spam";
-import UserManagement from "../usersManagement/UsersManagement";
+import UsersManagement from "../usersManagement/UsersManagement";
+import JobsManagement from "../jobsManagement/JobsManagement";
 
 const Main = ({ showSidebar, setShowSidebar }) => {
   const { admin } = useSelector((state) => state);
@@ -22,8 +22,11 @@ const Main = ({ showSidebar, setShowSidebar }) => {
           </div>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/users" component={UserManagement} />
-            <Route path="/admins" component={AdminManagement} />
+            <Route path="/teachers" render={(props) => <UsersManagement {...props} ROLE="teacher" />} />
+            <Route path="/alumnis" render={(props) => <UsersManagement {...props} ROLE="alumni" />} />
+            <Route path="/students" render={(props) => <UsersManagement {...props} ROLE="student" />} />
+            <Route path="/admins" render={(props) => <UsersManagement {...props} ROLE="admin" />}  />
+            <Route path="/jobs" component={JobsManagement} />
             <Route path="/adminregister" component={RegisterAdmin} />
             <Route path="/spams" component={Spam} />
             <Route path="/profile" component={AdminProfile} />

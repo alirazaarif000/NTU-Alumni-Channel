@@ -141,6 +141,7 @@ export const deleteSpamPost = ({ post, auth, socket }) => async (dispatch) => {
       text: "Your Post is deleted due to too many reports.",
       recipients: [post.user._id],
       url: `/profile/${post.user._id}`,
+      type: "info"
     };
 
     dispatch(createNotify({ msg, auth, socket }));

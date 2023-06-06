@@ -7,7 +7,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 25,
+      validate: {
+        validator: function (value) {
+          // Regular expression pattern to allow only letters and limit length to 15 characters
+          return /^[A-Za-z ]{1,25}$/.test(value);
+        },
+        message: 'Full name must contain only letters and be at most 25 characters long.'
+      }
     },
     username: {
       type: String,
@@ -15,6 +21,28 @@ const userSchema = new Schema(
       trim: true,
       maxlength: 25,
       unique: true,
+    },
+    regno: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: function (value) {
+          return /^(|\d{2}-NTU-[A-Za-z]{2}(-[A-Za-z]{2})?-\d{4})$/.test(value);
+        },
+        message: 'Invalid Registeration Number format.'
+      },
+    },
+    cnic: {
+      type: Number,
+      trim: true,
+      unique: true,
+      validate: {
+        validator: function (value) {
+          // Regular expression pattern to allow only letters and limit length to 15 characters
+          return /^\d{13}$/.test(value)
+        },
+        message: 'CNIC should be of 13 digits.'
+      }
     },
     email: {
       type: String,
@@ -49,10 +77,10 @@ const userSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['enabled', 'disabled'], 
-      default: 'enabled',
+      enum: ['verified', 'unverified'],
+      default: 'unverified',
     },
-    userType:  {
+    userType: {
       type: String,
       default: "",
     },

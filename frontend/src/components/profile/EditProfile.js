@@ -13,7 +13,10 @@ const EditProfile = ({ setOnEdit }) => {
     website: "",
     story: "",
     gender: "",
-    userType: "",
+    username: "",
+    email: "",
+    regno: "",
+    cnic: "",
 
     // Teacher
     department: "",
@@ -22,14 +25,11 @@ const EditProfile = ({ setOnEdit }) => {
 
     // Alumni
     degree: "",
-    batch: "",
     passingYear: "",
 
     // Student
-    university: "",
     major: "",
     semester: ""
-
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -40,7 +40,10 @@ const EditProfile = ({ setOnEdit }) => {
     website,
     story,
     gender,
-    userType,
+    username,
+    email,
+    regno,
+    cnic,
 
     // Teacher
     department,
@@ -49,28 +52,26 @@ const EditProfile = ({ setOnEdit }) => {
 
     // Alumni
     degree,
-    batch,
     passingYear,
 
     // Student
-    university,
     major,
     semester,
   } = formData;
 
   const [avatar, SetAvatar] = useState("");
-  const { auth, theme } = useSelector((state) => state);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setFormData(auth.user);
   }, [auth.user]);
 
-  const renderFieldsByRole = () => {
-    switch (userType) {
+  const renderFieldsByRole = (type) => {
+    switch (type) {
       case "teacher":
         return (
-          <div className="row m-0 m-0">
+          <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
               <label htmlFor="department" className="form-label fw-bold">Department:</label>
               <select
@@ -125,20 +126,19 @@ const EditProfile = ({ setOnEdit }) => {
         return (
           <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="batch" className="form-label fw-bold">Batch:</label>
-              <select
-                className="form-select text-center"
-                id="batch"
-                name="batch"
-                value={batch}
+              <label htmlFor="regno" className="form-label">
+                Registeration No.
+              </label>
+              <input
+                type="text"
+                placeholder="00-NTU-XX-XX-0000"
+                className="form-control"
+                id="regno"
                 onChange={handleChangeInput}
+                value={regno}
+                name="regno"
                 required
-              >
-                <option value="">Not Selected</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-              </select>
+              />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
               <label htmlFor="passingYear" className="form-label fw-bold">Passing Year:</label>
@@ -178,6 +178,21 @@ const EditProfile = ({ setOnEdit }) => {
         return (
           <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
+              <label htmlFor="regno" className="form-label">
+                Registeration No.
+              </label>
+              <input
+                type="text"
+                placeholder="00-NTU-XX-XX-0000"
+                className="form-control"
+                id="regno"
+                onChange={handleChangeInput}
+                value={regno}
+                name="regno"
+                required
+              />
+            </div>
+            <div className="mb-3 col-md-6 col-lg-4">
               <label htmlFor="semester" className="form-label fw-bold">Semester:</label>
               <select
                 className="form-select text-center"
@@ -209,22 +224,7 @@ const EditProfile = ({ setOnEdit }) => {
                 <option value="mathematics">Mathematics</option>
               </select>
             </div>
-            <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="university" className="form-label fw-bold">University:</label>
-              <select
-                className="form-select text-center"
-                id="university"
-                name="university"
-                value={university}
-                onChange={handleChangeInput}
-                required
-              >
-                <option value="">Not Selected</option>
-                <option value="university-1">University 1</option>
-                <option value="university-2">University 2</option>
-                <option value="university-3">University 3</option>
-              </select>
-            </div>
+
           </div>
         );
       default:
@@ -242,7 +242,10 @@ const EditProfile = ({ setOnEdit }) => {
   };
 
   const handleChangeInput = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if (name === "cnic") {
+      value = value.replace(/[^0-9]/g, "").slice(0, 13)
+    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -297,6 +300,38 @@ const EditProfile = ({ setOnEdit }) => {
             />
           </div>
 
+          <div className="col-sm-12 col-md-6 mb-3">
+            <label htmlFor="username" className="form-label">
+              User name
+            </label>
+            <input
+              type="text"
+              placeholder="johnsmith07"
+              className="form-control"
+              id="username"
+              onChange={handleChangeInput}
+              value={username.toLowerCase().replace(/ /g, "")}
+              name="username"
+              required
+            />
+          </div>
+
+          <div className="col-sm-12 col-md-6 mb-3">
+            <label htmlFor="email" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              placeholder="john@gmail.com"
+              className="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              onChange={handleChangeInput}
+              value={email}
+              name="email"
+              required
+            />
+          </div>
 
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="mobile" className="form-label">
@@ -329,6 +364,36 @@ const EditProfile = ({ setOnEdit }) => {
           </div>
 
           <div className="col-sm-12 col-md-6 mb-3">
+            <label className="form-label fw-bold">Gender</label>
+            <div className="text-center">
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input cursor-pointer"
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="male"
+                  checked={gender === "male"}
+                  onChange={handleChangeInput}
+                />
+                <label className="form-check-label cursor-pointer" htmlFor="male">Male</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input cursor-pointer"
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="female"
+                  checked={gender === "female"}
+                  onChange={handleChangeInput}
+                />
+                <label className="form-check-label cursor-pointer" htmlFor="female">Female</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="website" className="form-label">
               Website
             </label>
@@ -343,79 +408,25 @@ const EditProfile = ({ setOnEdit }) => {
             />
           </div>
 
+
+
           <div className="col-sm-12 col-md-6 mb-3">
-            <label className="form-label fw-bold">Gender</label>
-            <div className="text-center">
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input cursor-pointer"
-                  type="radio"
-                  id="male"
-                  name="gender"
-                  value="male"
-                  checked= {gender === "male"}
-                  onChange={handleChangeInput}
-                />
-                <label className="form-check-label cursor-pointer" htmlFor="male">Male</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input cursor-pointer"
-                  type="radio"
-                  id="female"
-                  name="gender"
-                  value="female"
-                  checked= {gender === "female"}
-                  onChange={handleChangeInput}
-                />
-                <label className="form-check-label cursor-pointer" htmlFor="female">Female</label>
-              </div>
-            </div>
+            <label htmlFor="cnic" className="form-label">
+              CNIC
+            </label>
+            <input
+              type="text"
+              placeholder="9999999999999"
+              className="form-control"
+              id="cnic"
+              onChange={handleChangeInput}
+              value={cnic}
+              name="cnic"
+              required
+            />
           </div>
 
-          <div className="mb-3">
-            <label className="form-label fw-bold">Select Role:</label>
-            <div className='text-center'>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input cursor-pointer"
-                  type="radio"
-                  id="teacherRole"
-                  name="userType"
-                  value="teacher"
-                  checked= {userType === "teacher"}
-                  onChange={handleChangeInput}
-                />
-                <label className="form-check-label cursor-pointer" htmlFor="teacherRole">Teacher</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input cursor-pointer"
-                  type="radio"
-                  id="alumniRole"
-                  name="userType"
-                  value="alumni"
-                  checked= {userType === "alumni"}
-                  onChange={handleChangeInput}
-                />
-                <label className="form-check-label cursor-pointer" htmlFor="alumniRole">Alumni</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input cursor-pointer"
-                  type="radio"
-                  id="studentRole"
-                  name="userType"
-                  value="student"
-                  checked= {userType === "student"}
-                  onChange={handleChangeInput}
-                />
-                <label className="form-check-label cursor-pointer" htmlFor="studentRole">Student</label>
-              </div>
-            </div>
-          </div>
-
-          {renderFieldsByRole()}
+          {renderFieldsByRole(auth.user.userType)}
 
           <div className="mb-3">
             <label htmlFor="story" className="form-label">

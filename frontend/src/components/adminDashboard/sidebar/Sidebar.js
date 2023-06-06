@@ -14,7 +14,6 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     return window.location.pathname.includes(path);
   };
 
-
   return (
     <div className={`sidebar ${showSidebar ? "activeSide" : ""}`}>
       <div className="sidebar_responsive" id="sidebar" onClick={() => setShowSidebar(false)}>
@@ -41,11 +40,27 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           <h2 className='mb-2'>ADMIN CONTROL</h2>
 
           <Link
-            to="/users"
-            className={`sidebar__link ${isActive("/users") && "active_menu_link"}`}
+            to="/teachers"
+            className={`sidebar__link ${isActive("/teachers") && "active_menu_link"}`}
           >
             <i className="fa fa-users"></i>
-            <span>Users Management</span>
+            <span>Teachers</span>
+          </Link>
+
+          <Link
+            to="/alumnis"
+            className={`sidebar__link ${isActive("/alumnis") && "active_menu_link"}`}
+          >
+            <i className="fa fa-users"></i>
+            <span>Alumnis</span>
+          </Link>
+
+          <Link
+            to="/students"
+            className={`sidebar__link ${isActive("/students") && "active_menu_link"}`}
+          >
+            <i className="fa fa-users"></i>
+            <span>Students</span>
           </Link>
           
           <Link
@@ -70,6 +85,14 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           >
             <i className="fa fa-ban"></i>
             <span>Spams Management</span>
+          </Link>
+
+          <Link
+            to="/jobs"
+            className={`sidebar__link ${isActive("/jobs") && "active_menu_link"}`}
+          >
+            <i className="fa fa-tasks"></i>
+            <span>Jobs Management</span>
           </Link>
 
           <Link

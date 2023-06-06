@@ -21,6 +21,8 @@ const Register = () => {
     cf_password: "",
     gender: "male",
     userType: "teacher",
+    cnic: "",
+    regno: "",
 
     // Teacher
     department: "",
@@ -29,15 +31,16 @@ const Register = () => {
 
     // Alumni
     degree: "",
-    batch: "",
+    // bacth: "",
     passingYear: "",
 
     // Student
-    university: "",
+    // university: "",
     major: "",
     semester: ""
 
   };
+
   const [formData, setFormData] = useState(initialState);
   const {
     fullname,
@@ -46,6 +49,9 @@ const Register = () => {
     password,
     cf_password,
     userType,
+    cnic,
+    regno,
+
     // Teacher
     department,
     designation,
@@ -53,23 +59,24 @@ const Register = () => {
 
     // Alumni
     degree,
-    batch,
     passingYear,
 
     // Student
-    university,
+    // university,
     major,
     semester,
   } = formData;
 
   const handleChangeInput = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if(name === "cnic") {
+      value = value.replace(/[^0-9]/g, "").slice(0, 13)
+    }
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
     dispatch(register(formData));
   };
 
@@ -132,20 +139,19 @@ const Register = () => {
         return (
           <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="batch" className="form-label fw-bold">Batch:</label>
-              <select
-                className="form-select text-center"
-                id="batch"
-                name="batch"
-                value={batch}
+              <label htmlFor="regno" className="form-label">
+                Registeration No.
+              </label>
+              <input
+                type="text"
+                placeholder="00-NTU-XX-XX-0000"
+                className="form-control"
+                id="regno"
                 onChange={handleChangeInput}
+                value={regno}
+                name="regno"
                 required
-              >
-                <option value="">Not Selected</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-              </select>
+              />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
               <label htmlFor="passingYear" className="form-label fw-bold">Passing Year:</label>
@@ -185,6 +191,21 @@ const Register = () => {
         return (
           <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
+              <label htmlFor="regno" className="form-label">
+                Registeration No.
+              </label>
+              <input
+                type="text"
+                placeholder="00-NTU-XX-XX-0000"
+                className="form-control"
+                id="regno"
+                onChange={handleChangeInput}
+                value={regno}
+                name="regno"
+                required
+              />
+            </div>
+            <div className="mb-3 col-md-6 col-lg-4">
               <label htmlFor="semester" className="form-label fw-bold">Semester:</label>
               <select
                 className="form-select text-center"
@@ -216,22 +237,7 @@ const Register = () => {
                 <option value="mathematics">Mathematics</option>
               </select>
             </div>
-            <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="university" className="form-label fw-bold">University:</label>
-              <select
-                className="form-select text-center"
-                id="university"
-                name="university"
-                value={university}
-                onChange={handleChangeInput}
-                required
-              >
-                <option value="">Not Selected</option>
-                <option value="university-1">University 1</option>
-                <option value="university-2">University 2</option>
-                <option value="university-3">University 3</option>
-              </select>
-            </div>
+
           </div>
         );
       default:
@@ -262,7 +268,9 @@ const Register = () => {
                 onChange={handleChangeInput}
                 value={fullname}
                 name="fullname"
+                required
                 style={{ background: `${alert.fullname ? "#fd2d6a14" : ""} ` }}
+
               />
               <small className="form-text text-danger">
                 {alert.fullname ? alert.fullname : ""}
@@ -281,6 +289,7 @@ const Register = () => {
                 onChange={handleChangeInput}
                 value={username.toLowerCase().replace(/ /g, "")}
                 name="username"
+                required
                 style={{ background: `${alert.username ? "#fd2d6a14" : ""} ` }}
               />
               <small className="form-text text-danger">
@@ -301,6 +310,7 @@ const Register = () => {
                 onChange={handleChangeInput}
                 value={email}
                 name="email"
+                required
                 style={{ background: `${alert.email ? "#fd2d6a14" : ""} ` }}
               />
               <small className="form-text text-danger">
@@ -350,6 +360,7 @@ const Register = () => {
                   onChange={handleChangeInput}
                   value={password}
                   name="password"
+                  required
                   style={{
                     background: `${alert.password ? "#fd2d6a14" : ""} `,
                   }}
@@ -373,6 +384,7 @@ const Register = () => {
                   onChange={handleChangeInput}
                   value={cf_password}
                   name="cf_password"
+                  required
                   style={{
                     background: `${alert.cf_password ? "#fd2d6a14" : ""} `,
                   }}
@@ -381,6 +393,23 @@ const Register = () => {
               <small className="form-text text-danger">
                 {alert.cf_password ? alert.cf_password : ""}
               </small>
+            </div>
+
+
+            <div className="col-sm-12 col-md-6 mb-3">
+              <label htmlFor="cnic" className="form-label">
+                CNIC
+              </label>
+              <input
+                type="text"
+                placeholder="9999999999999"
+                className="form-control"
+                id="cnic"
+                onChange={handleChangeInput}
+                value={cnic}
+                name="cnic"
+                required
+              />
             </div>
 
             <div className="mb-3">

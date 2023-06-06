@@ -10,6 +10,7 @@ const notifySchema = new Schema(
     text: String,
     content: String,
     image: String,
+    type: String,
     isRead: {type:Boolean, default: false}
   },
   {

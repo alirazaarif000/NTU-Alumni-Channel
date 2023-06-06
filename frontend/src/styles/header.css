@@ -109,3 +109,18 @@
     padding: 6px 8px;
     min-width: 280px;
 }
+
+.dot {
+    position: relative;
+  }
+  
+  .dot::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+  }

@@ -136,18 +136,6 @@ export const register = (data) => async (dispatch) => {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
     const res = await postDataAPI("register", data);
-
-    dispatch({
-      type: GLOBALTYPES.AUTH,
-      payload: { token: res.data.access_token, user: res.data.user },
-    });
-
-    dispatch({
-      type: GLOBALTYPES.USER_TYPE,
-      payload: res.data.user.role,
-    });
-
-    localStorage.setItem("firstLogin", true);
     dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
   } catch (err) {
     dispatch({
