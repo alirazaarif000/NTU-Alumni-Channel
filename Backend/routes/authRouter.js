@@ -3,6 +3,7 @@ const authCtrl = require('../controllers/authCtrl');
 const auth = require('../middleware/auth');
 
 router.post('/register', authCtrl.register);
+router.post('/resetpassword', authCtrl.forgetpassword);
 router.post("/register_admin", authCtrl.registerAdmin);
 router.post("/changePassword", auth,  authCtrl.changePassword);
 router.post("/login", authCtrl.login);

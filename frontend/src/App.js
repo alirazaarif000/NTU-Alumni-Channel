@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/adminDashboard";
 import { GLOBALTYPES } from "./redux/actions/globalTypes";
 import SocketClient from "./SocketClient";
 import { Redirect, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import ForgetPassword from "./pages/forgetPassword";
 
 function App() {
   const { auth, status, modal, userType: role } = useSelector((state) => state);
@@ -79,6 +80,7 @@ function App() {
               <>
                 <Route exact path="/" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/resetpassword" component={ForgetPassword} />
                 <Redirect to="/" />
               </>
           }

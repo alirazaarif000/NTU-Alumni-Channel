@@ -16,6 +16,15 @@
     font-weight: bold;
 }
 
+.auth_page .forgetForm {
+    background: var(--linear-gradient);
+    max-width: 480px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+}
+
 .auth_page form input {
     border: none;
     outline: none;

@@ -59,8 +59,13 @@ const Login = () => {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="loginpassword" className="form-label">
-              Password
+            <label htmlFor="loginpassword" className="form-label d-flex w-100">
+              <div>Password</div>          
+              <div className="ms-auto">
+                <Link to="/resetpassword" style={{ fontSize: "14px", textDecoration: "none" }}>
+                  Forget Password?
+                </Link>
+              </div>
             </label>
             <input
               placeholder="Password"

@@ -11,6 +11,8 @@ frontend/.env
 # MONGODB_URL = <local | Online URL>
 # ACCESS_TOKEN_SECRET = itissecret
 # REFRESH_TOKEN_SECRET = itisalsosecret
+# MAILGUN_API_KEY=<API_KEY_FROM_MAILGUN_ACCOUNT>
+# SANDBOX_EMAIL_ADDRESS=sandbox<....>.mailgun.org
 
 # frontend/.env variables:
 

@@ -204,6 +204,19 @@ export const updateProfileAdmin = ({ formData, auth }) => async (dispatch) => {
 
 };
 
+export const forgetpassword = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+    const res = await postDataAPI("resetpassword", data);
+    dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+  } catch (err) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: { error: err.response.data.msg },
+    });
+  }
+};
+
 export const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem("firstLogin");

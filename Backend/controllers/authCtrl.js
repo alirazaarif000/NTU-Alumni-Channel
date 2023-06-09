@@ -1,4 +1,12 @@
 const Users = require("../models/userModel");
+const verifier = require('email-verify');
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'api',
+  key: process.env.MAILGUN_API_KEY,
+});
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -138,7 +146,42 @@ const authCtrl = {
       return res.status(500).json({ msg: errorMessage });
     }
   },
+  forgetpassword: async (req, res) => {
+    try {
 
+      const { email } = req.body;
+
+      // Verify if the email exists in the real world
+      verifier.verify(email, (err, info) => {
+        if (err || !info.success) {
+          return res.status(404).json({ msg: "Can't send mail to non-existing email address." });
+        }
+      })
+
+      const user = await Users.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ msg: 'Email not found.' });
+      }
+
+      const newPassword = generateRandomPassword(8);
+      const passwordHash = await bcrypt.hash(newPassword, 12);
+      user.password = passwordHash;
+      await user.save();
+
+      const data = {
+        from: `Mailgun Sandbox <postmaster@${process.env.SANDBOX_EMAIL_ADDRESS}>`,
+        to: email,
+        subject: 'Password Reset',
+        text: `Your new password is: ${newPassword}`,
+      };
+
+      await mg.messages.create(`${process.env.SANDBOX_EMAIL_ADDRESS}`, data);
+      res.json({ msg: 'Password reset email sent successfully.' });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ msg: 'Internal server error.' });
+    }
+  },
   changePassword: async (req, res) => {
     try {
       const { oldPassword, newPassword } = req.body;
@@ -159,7 +202,7 @@ const authCtrl = {
       const newPasswordHash = await bcrypt.hash(newPassword, 12);
 
       await Users.findOneAndUpdate({ _id: req.user._id }, { password: newPasswordHash },
-        );
+      );
 
       res.json({ msg: "Password updated successfully." })
 
@@ -341,7 +384,7 @@ const authCtrl = {
             .populate("followers following", "-password");
 
           if (!user) {
-            res.status(400).json({ msg: "User does not exist." });
+            return res.status(400).json({ msg: "User does not exist." });
           }
 
           const access_token = createAccessToken({ id: result.id });
@@ -353,6 +396,19 @@ const authCtrl = {
     }
   },
 };
+
+function generateRandomPassword(length) {
+  const chars =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  let newPassword = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    newPassword += chars[randomIndex];
+  }
+
+  return newPassword;
+}
 
 const createAccessToken = (payload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
