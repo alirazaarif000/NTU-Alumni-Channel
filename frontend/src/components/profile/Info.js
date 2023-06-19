@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Avatar from '../Avatar';
-import EditProfile from './EditProfile';
-import FollowBtn from '../FollowBtn';
-import Following from './Following';
-import Followers from './Followers';
-import ChangePassword from './ChangePassword';
-import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+import React, { useState, useEffect } from "react";
+import Avatar from "../Avatar";
+import EditProfile from "./EditProfile";
+import FollowBtn from "../FollowBtn";
+import Following from "./Following";
+import Followers from "./Followers";
+import ChangePassword from "./ChangePassword";
+import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 
 const Info = ({ id, auth, profile, dispatch }) => {
   const [userData, setUserData] = useState([]);
@@ -19,7 +19,7 @@ const Info = ({ id, auth, profile, dispatch }) => {
     if (id === auth.user._id) {
       setUserData([auth.user]);
     } else {
-      const newData = profile.users.filter(user => user._id === id);
+      const newData = profile.users.filter((user) => user._id === id);
       setUserData(newData);
     }
   }, [id, auth, dispatch, profile.users]);
@@ -34,27 +34,28 @@ const Info = ({ id, auth, profile, dispatch }) => {
 
   const truncatedUsername = (username) => {
     return username.length > 10 ? username.substring(0, 10) + "..." : username;
-  }
+  };
 
   return (
     <div className="info">
-
       {userData.map((user) => (
-
         <div key={user._id} className="row m-0">
-
           <div className="d-flex justify-content-center align-items-center col-sm-3 mb-4 mb-sm-0">
-            <Avatar src={user.avatar} size="supper-avatar" style={{ borderRadius: "50%", height: "170px", width: "170px" }} />
+            <Avatar
+              src={user.avatar}
+              size="supper-avatar"
+              style={{ borderRadius: "50%", height: "170px", width: "170px" }}
+            />
           </div>
 
           <div className="col-sm-9">
             <div className="row">
-              <div className='col-4 d-flex align-items-center'>
-                <h2 className='me-2'>{truncatedUsername(user.username)}</h2>
-                <span className='text-muted'>~{user.userType}</span>
+              <div className="col-4 d-flex align-items-center">
+                <h2 className="me-2">{truncatedUsername(user.username)}</h2>
+                <span className="text-muted">~{user.userType}</span>
               </div>
 
-              <div className='text-end col-8 mb-2 col-md-4'>
+              <div className="text-end col-8 mb-2 col-md-4">
                 {user._id === auth.user._id ? (
                   <button
                     className="app-button me-md-2"
@@ -65,10 +66,9 @@ const Info = ({ id, auth, profile, dispatch }) => {
                 ) : (
                   <FollowBtn user={user} />
                 )}
-
               </div>
 
-              <div className='text-center text-md-start col-12 col-md-4 p-md-0'>
+              <div className="text-center text-md-start col-12 col-md-4 p-md-0">
                 {user._id === auth.user._id ? (
                   <button
                     className="app-button w-100"
@@ -82,37 +82,73 @@ const Info = ({ id, auth, profile, dispatch }) => {
               </div>
             </div>
 
-            <div className='text-center text-sm-start'>
+            <div className="text-center text-sm-start">
               <div className="follow_btn mt-2 mt-sm-1 mb-1">
-                <span onClick={() => setShowFollowers(true)} className='me-4 cursor-pointer'>
+                <span
+                  onClick={() => setShowFollowers(true)}
+                  className="me-4 cursor-pointer"
+                >
                   {user.followers.length} Followers
                 </span>
-                <span onClick={() => setShowFollowing(true)} className='cursor-pointer'>
+                <span
+                  onClick={() => setShowFollowing(true)}
+                  className="cursor-pointer"
+                >
                   {user.following.length} Following
                 </span>
               </div>
 
-              <h4>
-                {user.fullname}
-                <span className="ms-1 color-violet fs-6">{user.mobile}</span>
-              </h4>
-              <h6>{user.email}</h6>
-              <p className="m-0">{user.address}</p>
-              <a
-                style={{ textDecoration: "none" }}
-                href={`http://${user.website}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {user.website}
-              </a>
-              <p>{user.story}</p>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td>{user.fullname}</td>
+                  </tr>
+                  <tr>
+                    <td>Mobile</td>
+                    <td>{user.mobile}</td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>{user.email}</td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>{user.address}</td>
+                  </tr>
+                  <tr>
+                    <td>Facebook Profile</td>
+                    <td>
+                      <a
+                        style={{ textDecoration: "none" }}
+                        href={`http://${user.website}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.website}
+                      </a>
+                    </td>
+                  </tr>
+                  {user.userType === "student" && (
+                    <tr>
+                      <td>Reg.No</td>
+                      <td>{user.regno}</td>
+                    </tr>
+                  )}
+                 
+                  <tr>
+                    <td>Story</td>
+                    <td>{user.story}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
           </div>
 
           {onEdit && <EditProfile setOnEdit={setOnEdit} />}
-          {changePassword && <ChangePassword setChangePassword={setChangePassword} />}
+          {changePassword && (
+            <ChangePassword setChangePassword={setChangePassword} />
+          )}
 
           {showFollowers && (
             <Followers
@@ -128,9 +164,8 @@ const Info = ({ id, auth, profile, dispatch }) => {
           )}
         </div>
       ))}
-
     </div>
   );
-}
+};
 
-export default Info
+export default Info;

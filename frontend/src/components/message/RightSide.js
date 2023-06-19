@@ -24,14 +24,14 @@ const RightSide = ({ setShowChats }) => {
   const [loadMedia, setLoadMedia] = useState(false);
   const refDisplay = useRef();
   const pageEnd = useRef();
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     const newData = message.data.filter(
       (item) => item.sender === auth.user._id || item.sender === id
     );
     setData(newData);
-    setConversationId(message?.data[0]?.conversation)
+    setConversationId(message?.data[0]?.conversation);
   }, [message.data, auth.user._id, id]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const RightSide = ({ setShowChats }) => {
     setMedia(newArr);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!text.trim() && media.length === 0) return;
     setText('');
@@ -84,7 +84,7 @@ const RightSide = ({ setShowChats }) => {
       text,
       media: newArr,
       createdAt: new Date().toISOString()
-    }
+    };
     setLoadMedia(false);
     dispatch(addMessage({ msg, auth, socket })).then((response) => {
       const { conversationId } = response;
@@ -93,7 +93,7 @@ const RightSide = ({ setShowChats }) => {
 
     if (refDisplay.current) {
       refDisplay.current.scrollIntoView({
-        behaviour: "smooth",
+        behavior: "smooth",
         block: "end",
       });
     }
@@ -108,7 +108,7 @@ const RightSide = ({ setShowChats }) => {
         setPage(1);
         await dispatch(getMessages({ auth, id }));
         if (refDisplay.current) {
-          refDisplay.current.scrollIntoView({ behaviour: 'smooth', block: 'end' });
+          refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
       };
 
@@ -144,17 +144,24 @@ const RightSide = ({ setShowChats }) => {
   useEffect(() => {
     if (refDisplay.current) {
       refDisplay.current.scrollIntoView({
-        behaviour: "smooth",
+        behavior: "smooth",
         block: "end",
       });
     }
-  }, [text])
+  }, [text]);
 
 
   const handleDelete = () => {
     if (window.confirm("Are you sure to delete the conversation?")) {
-      dispatch(deleteConversation({ conversationId, userId: id, message, auth }))
-      history.push("/message")
+      dispatch(deleteConversation({ conversationId, userId: id, message, auth }));
+      history.push("/message");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
     }
   };
 
@@ -222,6 +229,7 @@ const RightSide = ({ setShowChats }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           style={{ filter: theme ? "invert(1)" : "invert(0)", background: theme ? '#040404' : '', color: theme ? 'white' : '' }}
+          onKeyPress={handleKeyPress} // Added this line
         />
         <Icons setContent={setText} content={text} theme={theme} />
         <div className="file_upload">
@@ -245,6 +253,6 @@ const RightSide = ({ setShowChats }) => {
       </form>
     </div>
   );
-}
+};
 
-export default RightSide
+export default RightSide;

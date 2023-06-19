@@ -3,7 +3,7 @@
     background: var(--linear-gradient);
     display: flex;
     align-items: center;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .logo-link {

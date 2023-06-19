@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -12,8 +12,9 @@ const userSchema = new Schema(
           // Regular expression pattern to allow only letters and limit length to 15 characters
           return /^[A-Za-z ]{1,25}$/.test(value);
         },
-        message: 'Full name must contain only letters and be at most 25 characters long.'
-      }
+        message:
+          "Full name must contain only letters and be at most 25 characters long.",
+      },
     },
     username: {
       type: String,
@@ -29,7 +30,7 @@ const userSchema = new Schema(
         validator: function (value) {
           return /^(|\d{2}-NTU-[A-Za-z]{2}(-[A-Za-z]{2})?-\d{4})$/.test(value);
         },
-        message: 'Invalid Registeration Number format.'
+        message: "Invalid Registeration Number format.",
       },
     },
     cnic: {
@@ -39,10 +40,10 @@ const userSchema = new Schema(
       validate: {
         validator: function (value) {
           // Regular expression pattern to allow only letters and limit length to 15 characters
-          return /^\d{13}$/.test(value)
+          return /^\d{13}$/.test(value);
         },
-        message: 'CNIC should be of 13 digits.'
-      }
+        message: "CNIC should be of 13 digits.",
+      },
     },
     email: {
       type: String,
@@ -67,18 +68,28 @@ const userSchema = new Schema(
       type: String,
       default: "male",
     },
+
     mobile: {
       type: String,
       default: "",
+      validate: {
+        validator: function (value) {
+          return (
+            value === null || value === "" || /^(\+923)?\d{9}$/.test(value)
+          );
+        },
+        message: "Incorrect Mobile No or format.",
+      },
     },
+
     address: {
       type: String,
       default: "",
     },
     status: {
       type: String,
-      enum: ['verified', 'unverified'],
-      default: 'unverified',
+      enum: ["verified", "unverified"],
+      default: "unverified",
     },
     userType: {
       type: String,
@@ -129,8 +140,8 @@ const userSchema = new Schema(
     saved: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'post'
-      }
+        ref: "post",
+      },
     ],
     story: {
       type: String,
@@ -159,5 +170,4 @@ const userSchema = new Schema(
   }
 );
 
-
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);

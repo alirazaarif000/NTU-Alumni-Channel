@@ -29,7 +29,7 @@ const EditProfile = ({ setOnEdit }) => {
 
     // Student
     major: "",
-    semester: ""
+    semester: "",
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -73,7 +73,9 @@ const EditProfile = ({ setOnEdit }) => {
         return (
           <div className="row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="department" className="form-label fw-bold">Department:</label>
+              <label htmlFor="department" className="form-label fw-bold">
+                Department:
+              </label>
               <select
                 className="form-select text-center"
                 id="department"
@@ -83,13 +85,33 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="department-1">Department 1</option>
-                <option value="department-2">Department 2</option>
-                <option value="department-3">Department 3</option>
+                <option value="Department of Computer Science">
+                  Department of Computer Science
+                </option>
+                <option value="Department of Applied Sciences">
+                  Department of Applied Sciences
+                </option>
+                <option value="Department of Textile Engineering">
+                  Department of Textile Engineering
+                </option>
+                <option value="Department of Textile Technology">
+                  Department of Textile Technology
+                </option>
+                <option value="Department of Materials">
+                  Department of Materials
+                </option>
+                <option value="Faisalabad Business School">
+                  Faisalabad Business School
+                </option>
+                <option value="School of Arts & Design">
+                  School of Arts & Design
+                </option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="designation" className="form-label fw-bold">Designation:</label>
+              <label htmlFor="designation" className="form-label fw-bold">
+                Designation:
+              </label>
               <select
                 className="form-select text-center"
                 id="designation"
@@ -99,13 +121,16 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="designation-1">Designation 1</option>
-                <option value="designation-2">Designation 2</option>
-                <option value="designation-3">Designation 3</option>
+                <option value="Professor">Professor</option>
+                <option value="Assistant Professor">Assistant Professor</option>
+                <option value="Associate Professor">Associate Professor</option>
+                <option value="Lecturer">Lecturer</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="qualification" className="form-label fw-bold">Qualification:</label>
+              <label htmlFor="qualification" className="form-label fw-bold">
+                Qualification:
+              </label>
               <select
                 className="form-select text-center"
                 id="qualification"
@@ -115,9 +140,9 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="qualification-1">Qualification 1</option>
-                <option value="qualification-2">Qualification 2</option>
-                <option value="qualification-3">Qualification 3</option>
+                <option value="phd">PHD</option>
+                <option value="ms">MS</option>
+                <option value="bs">BS</option>
               </select>
             </div>
           </div>
@@ -141,7 +166,9 @@ const EditProfile = ({ setOnEdit }) => {
               />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="passingYear" className="form-label fw-bold">Passing Year:</label>
+              <label htmlFor="passingYear" className="form-label fw-bold">
+                Passing Year:
+              </label>
               <select
                 className="form-select text-center"
                 id="passingYear"
@@ -151,13 +178,22 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="degree" className="form-label fw-bold">Degree:</label>
+              <label htmlFor="degree" className="form-label fw-bold">
+                Degree:
+              </label>
               <select
                 className="form-select text-center"
                 id="degree"
@@ -167,9 +203,9 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="bachelor">Bachelor</option>
-                <option value="master">Master</option>
-                <option value="phd">PhD</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="PhD">PhD</option>
               </select>
             </div>
           </div>
@@ -193,7 +229,9 @@ const EditProfile = ({ setOnEdit }) => {
               />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="semester" className="form-label fw-bold">Semester:</label>
+              <label htmlFor="semester" className="form-label fw-bold">
+                Semester:
+              </label>
               <select
                 className="form-select text-center"
                 id="semester"
@@ -206,10 +244,17 @@ const EditProfile = ({ setOnEdit }) => {
                 <option value="1">1st Semester</option>
                 <option value="2">2nd Semester</option>
                 <option value="3">3rd Semester</option>
+                <option value="4">4th Semester</option>
+                <option value="5">5th Semester</option>
+                <option value="6">6th Semester</option>
+                <option value="7">7th Semester</option>
+                <option value="8">8th Semester</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="major" className="form-label fw-bold">Major:</label>
+              <label htmlFor="major" className="form-label fw-bold">
+                Major:
+              </label>
               <select
                 className="form-select text-center"
                 id="major"
@@ -219,12 +264,62 @@ const EditProfile = ({ setOnEdit }) => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="computer-science">Computer Science</option>
-                <option value="engineering">Engineering</option>
-                <option value="mathematics">Mathematics</option>
+                <option value="BS Computer Science">BS Computer Science</option>
+                <option value="BS Software Engineering">
+                  BS Software Engineering
+                </option>
+                <option value="BS Artificial Intelligence">
+                  BS Artificial Intelligence
+                </option>
+                <option value="BS Artificial Intelligence">
+                  BS Information Technology
+                </option>
+                <option value="BS Textile Engineering">
+                  BS Textile Engineering
+                </option>
+                <option value="BS Polymer Engineering">
+                  BS Polymer Engineering
+                </option>
+                <option value="BS Apparel Manufacturing">
+                  BS Apparel Manufacturing
+                </option>
+                <option value="BS Textile Engineering Technology">
+                  BS Textile Engineering Technology
+                </option>
+                <option value="BS Fashion Design & Technology">
+                  BS Fashion Design & Technology
+                </option>
+                <option value="BS in Textile Design">
+                  BS in Textile Design
+                </option>
+                <option value="BS in Visual Arts">BS in Visual Arts</option>
+                <option value="BS in Animation & Multimedia Design">
+                  BS in Animation & Multimedia Design
+                </option>
+                <option value="BS in Business Administration">
+                  BS in Business Administration
+                </option>
+                <option value="BS in Textile Management & Marketing">
+                  BS in Textile Management & Marketing
+                </option>
+                <option value="BS in Textile & Apparel Merchandising">
+                  BS in Textile & Apparel Merchandising
+                </option>
+                <option value="BS Accounting & Finance">
+                  BS Accounting & Finance
+                </option>
+                <option value="BS Applied Mathematics<">
+                  BS Applied Mathematics
+                </option>
+                <option value="BS Applied Physics">BS Applied Physics</option>
+                <option value="BS Applied Statistics">
+                  BS Applied Statistics
+                </option>
+                <option value="BS Applied Chemistry">
+                  BS Applied Chemistry
+                </option>
               </select>
             </div>
-
           </div>
         );
       default:
@@ -244,19 +339,22 @@ const EditProfile = ({ setOnEdit }) => {
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
     if (name === "cnic") {
-      value = value.replace(/[^0-9]/g, "").slice(0, 13)
+      value = value.replace(/[^0-9]/g, "").slice(0, 13);
     }
+    // if (name === "mobile") {
+    //   value = value.replace(/\s/g, "");
+    // }
+
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProfileUser({ formData, avatar, auth }));
   };
 
   return (
     <div className="edit_profile">
-
       <form onSubmit={handleSubmit} className="px-3 px-md-5 pt-5 pb-4">
         <button
           className="btn btn-danger btn_close"
@@ -283,15 +381,14 @@ const EditProfile = ({ setOnEdit }) => {
           </span>
         </div>
 
-        <div className='row mb-4'>
-
+        <div className="row mb-4">
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="fullname" className="form-label">
               Full name
             </label>
             <input
               type="text"
-              placeholder="John Smith"
+              placeholder="Ali Raza"
               className="form-control"
               id="fullname"
               onChange={handleChangeInput}
@@ -299,14 +396,13 @@ const EditProfile = ({ setOnEdit }) => {
               name="fullname"
             />
           </div>
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="username" className="form-label">
               User name
             </label>
             <input
               type="text"
-              placeholder="johnsmith07"
+              placeholder="aliraza1"
               className="form-control"
               id="username"
               onChange={handleChangeInput}
@@ -315,14 +411,13 @@ const EditProfile = ({ setOnEdit }) => {
               required
             />
           </div>
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="email" className="form-label">
               Email address
             </label>
             <input
               type="email"
-              placeholder="john@gmail.com"
+              placeholder="aliraza@gmail.com"
               className="form-control"
               id="email"
               aria-describedby="emailHelp"
@@ -332,14 +427,13 @@ const EditProfile = ({ setOnEdit }) => {
               required
             />
           </div>
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="mobile" className="form-label">
               Mobile
             </label>
             <input
               type="text"
-              placeholder="+92312-3456-789"
+              placeholder="+923080000000"
               className="form-control"
               id="mobile"
               onChange={handleChangeInput}
@@ -362,7 +456,6 @@ const EditProfile = ({ setOnEdit }) => {
               name="address"
             />
           </div>
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label className="form-label fw-bold">Gender</label>
             <div className="text-center">
@@ -376,7 +469,12 @@ const EditProfile = ({ setOnEdit }) => {
                   checked={gender === "male"}
                   onChange={handleChangeInput}
                 />
-                <label className="form-check-label cursor-pointer" htmlFor="male">Male</label>
+                <label
+                  className="form-check-label cursor-pointer"
+                  htmlFor="male"
+                >
+                  Male
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
@@ -388,14 +486,18 @@ const EditProfile = ({ setOnEdit }) => {
                   checked={gender === "female"}
                   onChange={handleChangeInput}
                 />
-                <label className="form-check-label cursor-pointer" htmlFor="female">Female</label>
+                <label
+                  className="form-check-label cursor-pointer"
+                  htmlFor="female"
+                >
+                  Female
+                </label>
               </div>
             </div>
           </div>
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="website" className="form-label">
-              Website
+              Facebook Profile
             </label>
             <input
               type="text"
@@ -407,9 +509,6 @@ const EditProfile = ({ setOnEdit }) => {
               name="website"
             />
           </div>
-
-
-
           <div className="col-sm-12 col-md-6 mb-3">
             <label htmlFor="cnic" className="form-label">
               CNIC
@@ -425,9 +524,7 @@ const EditProfile = ({ setOnEdit }) => {
               required
             />
           </div>
-
           {renderFieldsByRole(auth.user.userType)}
-
           <div className="mb-3">
             <label htmlFor="story" className="form-label">
               Story
@@ -446,10 +543,7 @@ const EditProfile = ({ setOnEdit }) => {
         </div>
 
         <div className="text-center">
-          <button
-            type="submit"
-            className="form-button"
-          >
+          <button type="submit" className="form-button">
             Save
           </button>
         </div>

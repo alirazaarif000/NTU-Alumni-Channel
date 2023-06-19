@@ -5,7 +5,7 @@ const initialState = {
   resultUsers: 0,
   data: [],
   resultData: 0,
-  firstLoad: false
+  firstLoad: false,
 };
 
 const messageReducer = (state = initialState, action) => {
@@ -23,12 +23,12 @@ const messageReducer = (state = initialState, action) => {
         data: [...state.data, action.payload],
         users: state.users.map((user) =>
           user._id === action.payload.recipient ||
-            user._id === action.payload.sender
+          user._id === action.payload.sender
             ? {
-              ...user,
-              text: action.payload.text,
-              media: action.payload.media,
-            }
+                ...user,
+                text: action.payload.text,
+                media: action.payload.media,
+              }
             : user
         ),
       };
@@ -38,7 +38,7 @@ const messageReducer = (state = initialState, action) => {
         ...state,
         users: action.payload.newArr,
         resultUsers: action.payload.result,
-        firstLoad: true
+        firstLoad: true,
       };
 
     case MESSAGE_TYPES.GET_MESSAGES:
@@ -51,15 +51,7 @@ const messageReducer = (state = initialState, action) => {
     case MESSAGE_TYPES.DELETE_CONVERSATIONS:
       return {
         ...state,
-        users: state.users.map(user => {
-          if (user._id === action.payload._id) {
-            return {
-              ...user,
-              ...action.payload
-            };
-          }
-          return user;
-        })
+        users: state.users.filter((user) => user._id !== action.payload._id),
       };
 
     default:

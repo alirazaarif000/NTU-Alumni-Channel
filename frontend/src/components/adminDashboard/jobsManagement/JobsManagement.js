@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDataAPI, postDataAPI } from '../../../utils/fetchData';
-import { GLOBALTYPES } from '../../../redux/actions/globalTypes';
-import JobsModal from '../../modal/JobsModal';
-import LoadIcon from '../../../images/loading.gif'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataAPI, postDataAPI } from "../../../utils/fetchData";
+import { GLOBALTYPES } from "../../../redux/actions/globalTypes";
+import JobsModal from "../../modal/JobsModal";
+import LoadIcon from "../../../images/loading.gif";
 
 const JobsManagement = ({ ROLE }) => {
   const { auth } = useSelector((state) => state);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState([]);
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [jobPostData, setJobPostData] = useState({
     title: "",
     company: "",
     location: "",
-    description: "",
-    requirements: "",
-    salary: ""
+    alphabets: "",
+    duration: "",
+    salary: "",
+    link: "",
   });
 
   const [postModal, setPostModal] = useState(false);
@@ -27,14 +28,14 @@ const JobsManagement = ({ ROLE }) => {
     const { name, value } = e.target;
     setJobPostData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postDataAPI('jobs', { ...jobPostData }, auth.token);
+      await postDataAPI("jobs", { ...jobPostData }, auth.token);
       dispatch({
         type: GLOBALTYPES.ALERT,
         payload: { success: "New Job added successfully!" },
@@ -47,9 +48,9 @@ const JobsManagement = ({ ROLE }) => {
         title: "",
         company: "",
         location: "",
-        description: "",
-        requirements: "",
-        salary: ""
+        alphabets: "",
+        duration: "",
+        salary: "",
       });
     } catch (err) {
       dispatch({
@@ -60,16 +61,15 @@ const JobsManagement = ({ ROLE }) => {
     setPostModal(false);
   };
 
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const res = await getDataAPI(`jobs?search=${searchQuery}`, auth.token);
         setJobs(res.data.jobs);
-        setLoading(false)
+        setLoading(false);
       } catch (err) {
-        setLoading(false)
+        setLoading(false);
         dispatch({
           type: GLOBALTYPES.ALERT,
           payload: { error: err.response.data.msg },
@@ -111,42 +111,51 @@ const JobsManagement = ({ ROLE }) => {
       </div>
 
       <div className="table-responsive mt-3">
-        {!loading ? jobs.length >= 1 ?
-          <table className="table table-bordered custom-table">
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Title</th>
-                <th scope="col">Company</th>
-                <th scope="col">Salary</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs?.map((job, index) => (
-                <tr key={job._id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{job.title}</td>
-                  <td>{job.company}</td>
-                  <td>{job.salary}</td>
-                  <td>
-                    <button
-                      className="btn btn-info text-light"
-                      data-bs-toggle="modal"
-                      data-bs-target={`#jobModal${job._id}`}
-                    >
-                      View
-                    </button>
-                  </td>
+        {!loading ? (
+          jobs.length >= 1 ? (
+            <table className="table table-bordered custom-table">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Company</th>
+                  <th scope="col">Salary</th>
+                  <th scope="col">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table> :
-          <div className='text-center mt-4 border border-dark border-2 rounded p-3 mx-auto' style={{ maxWidth: "768px" }}>
-            <h2 className='m-0'>No Jobs Found!</h2>
-          </div> :
-          <div className="text-center p-2 mt-4"><img width={30} src={LoadIcon} alt="Loading" /></div>
-        }
+              </thead>
+              <tbody>
+                {jobs?.map((job, index) => (
+                  <tr key={job._id}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{job.title}</td>
+                    <td>{job.company}</td>
+                    <td>{job.salary}</td>
+                    <td>
+                      <button
+                        className="btn btn-info text-light"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#jobModal${job._id}`}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div
+              className="text-center mt-4 border border-dark border-2 rounded p-3 mx-auto"
+              style={{ maxWidth: "768px" }}
+            >
+              <h2 className="m-0">No Jobs Found!</h2>
+            </div>
+          )
+        ) : (
+          <div className="text-center p-2 mt-4">
+            <img width={30} src={LoadIcon} alt="Loading" />
+          </div>
+        )}
       </div>
 
       {jobs.map((job, index) => (
@@ -157,14 +166,16 @@ const JobsManagement = ({ ROLE }) => {
             title: job.title,
             company: job.company,
             location: job.location,
-            description: job.description,
-            requirements: job.requirements,
+            alphabets: job.alphabets,
+            duration: job.duration,
             salary: job.salary,
+            link: job.link,
           }}
           jobs={jobs}
           setJobs={setJobs}
         />
       ))}
+      
       <div
         className="modal fade"
         id="addnewjobpost"
@@ -196,6 +207,7 @@ const JobsManagement = ({ ROLE }) => {
                     className="form-control"
                     id="title"
                     name="title"
+                    placeholder="Mern Stack"
                     value={jobPostData.title}
                     onChange={handleJobDataInput}
                     required
@@ -210,6 +222,7 @@ const JobsManagement = ({ ROLE }) => {
                     className="form-control"
                     id="company"
                     name="company"
+                    placeholder="Devsinc"
                     value={jobPostData.company}
                     onChange={handleJobDataInput}
                     required
@@ -224,35 +237,38 @@ const JobsManagement = ({ ROLE }) => {
                     className="form-control"
                     id="location"
                     name="location"
+                    placeholder="Faisalabad"
                     value={jobPostData.location}
                     onChange={handleJobDataInput}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Description
+                  <label htmlFor="alphabets" className="form-label">
+                    Title Alphabets
                   </label>
                   <input
-                    type="description"
+                    type="alphabets"
                     className="form-control"
-                    id="description"
-                    name="description"
-                    value={jobPostData.description}
+                    id="alphabets"
+                    name="alphabets"
+                    placeholder="Mern Stack (MS)"
+                    value={jobPostData.alphabets}
                     onChange={handleJobDataInput}
                     required
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="requirements" className="form-label">
-                    Requirements
+                  <label htmlFor="duration" className="form-label">
+                    duration
                   </label>
                   <input
-                    type="requirements"
+                    type="duration"
                     className="form-control"
-                    id="requirements"
-                    name="requirements"
-                    value={jobPostData.requirements}
+                    id="duration"
+                    name="duration"
+                    placeholder="Full Time, Part Time, Contract"
+                    value={jobPostData.duration}
                     onChange={handleJobDataInput}
                     required
                   />
@@ -266,12 +282,27 @@ const JobsManagement = ({ ROLE }) => {
                     className="form-control"
                     id="salary"
                     name="salary"
+                    placeholder="100K"
                     value={jobPostData.salary}
                     onChange={handleJobDataInput}
                     required
                   />
                 </div>
-
+                <div className="mb-3">
+                  <label htmlFor="link " className="form-label">
+                    Job Link
+                  </label>
+                  <input
+                    type="link"
+                    className="form-control"
+                    id="link"
+                    name="link"
+                    placeholder="wwww.linkedin.com"
+                    value={jobPostData.link}
+                    onChange={handleJobDataInput}
+                    required
+                  />
+                </div>
               </div>
               <div className="modal-footer">
                 <button type="submit" className="btn btn-primary">

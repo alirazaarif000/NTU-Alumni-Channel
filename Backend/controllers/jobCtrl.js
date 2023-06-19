@@ -1,17 +1,19 @@
-const Job = require('../models/jobsModel');
+const Job = require("../models/jobsModel");
 
 const jobCtrl = {
   createJob: async (req, res) => {
     try {
-      const { title, company, location, description, requirements, salary } = req.body;
+      const { title, company, location, alphabets, duration, salary, link } =
+        req.body;
 
       const newJob = new Job({
         title,
         company,
         location,
-        description,
-        requirements,
-        salary
+        alphabets,
+        duration,
+        salary,
+        link
       });
 
       const jobExist = await Job.findOne({ title });
@@ -26,20 +28,17 @@ const jobCtrl = {
       console.log(err.message);
       res.status(500).json({ error: err.message });
     }
-  }
-  ,
-
+  },
   getJobs: async (req, res) => {
     try {
       const { search } = req.query;
       let jobs;
-
       if (search) {
         // Perform a case-insensitive search by title or company
         jobs = await Job.find({
           $or: [
-            { title: { $regex: search, $options: 'i' } },
-            { company: { $regex: search, $options: 'i' } },
+            { title: { $regex: search, $options: "i" } },
+            { company: { $regex: search, $options: "i" } },
           ],
         });
       } else {
@@ -53,13 +52,12 @@ const jobCtrl = {
     }
   },
 
-
   getJobById: async (req, res) => {
     try {
       const job = await Job.findById(req.params.id);
 
       if (!job) {
-        return res.status(404).json({ msg: 'Job not found' });
+        return res.status(404).json({ msg: "Job not found" });
       }
 
       res.json(job);
@@ -70,7 +68,8 @@ const jobCtrl = {
 
   updateJob: async (req, res) => {
     try {
-      const { title, company, location, description, requirements, salary } = req.body;
+      const { title, company, location, alphabets, duration, salary, link } =
+        req.body;
 
       const updatedJob = await Job.findByIdAndUpdate(
         req.params.id,
@@ -78,15 +77,16 @@ const jobCtrl = {
           title,
           company,
           location,
-          description,
-          requirements,
-          salary
+          alphabets,
+          duration,
+          salary,
+          link
         },
         { new: true }
       );
 
       if (!updatedJob) {
-        return res.status(404).json({ msg: 'Job not found' });
+        return res.status(404).json({ msg: "Job not found" });
       }
 
       res.json(updatedJob);
@@ -100,14 +100,14 @@ const jobCtrl = {
       const deletedJob = await Job.findByIdAndDelete(req.params.id);
 
       if (!deletedJob) {
-        return res.status(404).json({ msg: 'Job not found' });
+        return res.status(404).json({ msg: "Job not found" });
       }
 
-      res.json({ message: 'Job deleted successfully' });
+      res.json({ message: "Job deleted successfully" });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  }
+  },
 };
 
 module.exports = jobCtrl;

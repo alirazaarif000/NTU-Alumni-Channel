@@ -14,15 +14,19 @@ const jobPostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    alphabets: {
         type: String,
         required: true
     },
-    requirements: {
-        type: [String],
+    duration: {
+        type: String,
         required: true
     },
     salary: {
+        type: String,
+        required: true
+    },
+    link:{
         type: String,
         required: true
     }

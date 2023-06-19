@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
-import { register } from '../redux/actions/authAction';
-import TopBar from '../components/TopBar';
+import { register } from "../redux/actions/authAction";
+import TopBar from "../components/TopBar";
+import bg1 from "../images/bg.jpg";
+const bgImg = [bg1];
 
 const Register = () => {
-  const { auth, alert } = useSelector(state => state);
+  const { auth, alert } = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -37,8 +39,7 @@ const Register = () => {
     // Student
     // university: "",
     major: "",
-    semester: ""
-
+    semester: "",
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -69,8 +70,8 @@ const Register = () => {
 
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
-    if(name === "cnic") {
-      value = value.replace(/[^0-9]/g, "").slice(0, 13)
+    if (name === "cnic") {
+      value = value.replace(/[^0-9]/g, "").slice(0, 13);
     }
     setFormData({ ...formData, [name]: value });
   };
@@ -84,9 +85,11 @@ const Register = () => {
     switch (userType) {
       case "teacher":
         return (
-          <div className="row m-0">
+          <div className="register-bg row m-0">
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="department" className="form-label fw-bold">Department:</label>
+              <label htmlFor="department" className="form-label fw-bold">
+                Department:
+              </label>
               <select
                 className="form-select text-center"
                 id="department"
@@ -96,13 +99,27 @@ const Register = () => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="department-1">Department 1</option>
-                <option value="department-2">Department 2</option>
-                <option value="department-3">Department 3</option>
+                <option value="department-1">
+                  Department of Computer Science
+                </option>
+                <option value="department-2">
+                  Department of Applied Sciences
+                </option>
+                <option value="department-3">
+                  Department of Textile Engineering
+                </option>
+                <option value="department-4">
+                  Department of Textile Technology
+                </option>
+                <option value="department-5">Department of Materials</option>
+                <option value="department-6">Faisalabad Business School</option>
+                <option value="department-7">School of Arts & Design</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="designation" className="form-label fw-bold">Designation:</label>
+              <label htmlFor="designation" className="form-label fw-bold">
+                Designation:
+              </label>
               <select
                 className="form-select text-center"
                 id="designation"
@@ -112,13 +129,16 @@ const Register = () => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="designation-1">Designation 1</option>
-                <option value="designation-2">Designation 2</option>
-                <option value="designation-3">Designation 3</option>
+                <option value="designation-1">Professor</option>
+                <option value="designation-2">Assistant Professor</option>
+                <option value="designation-3">Associate Professor</option>
+                <option value="designation-4">Lecturer</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="qualification" className="form-label fw-bold">Qualification:</label>
+              <label htmlFor="qualification" className="form-label fw-bold">
+                Qualification:
+              </label>
               <select
                 className="form-select text-center"
                 id="qualification"
@@ -128,9 +148,9 @@ const Register = () => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="qualification-1">Qualification 1</option>
-                <option value="qualification-2">Qualification 2</option>
-                <option value="qualification-3">Qualification 3</option>
+                <option value="phd">PHD</option>
+                <option value="ms">MS</option>
+                <option value="bs">BS</option>
               </select>
             </div>
           </div>
@@ -154,7 +174,9 @@ const Register = () => {
               />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="passingYear" className="form-label fw-bold">Passing Year:</label>
+              <label htmlFor="passingYear" className="form-label fw-bold">
+                Passing Year:
+              </label>
               <select
                 className="form-select text-center"
                 id="passingYear"
@@ -164,13 +186,22 @@ const Register = () => {
                 required
               >
                 <option value="">Not Selected</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="degree" className="form-label fw-bold">Degree:</label>
+              <label htmlFor="degree" className="form-label fw-bold">
+                Degree:
+              </label>
               <select
                 className="form-select text-center"
                 id="degree"
@@ -206,7 +237,9 @@ const Register = () => {
               />
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="semester" className="form-label fw-bold">Semester:</label>
+              <label htmlFor="semester" className="form-label fw-bold">
+                Semester:
+              </label>
               <select
                 className="form-select text-center"
                 id="semester"
@@ -219,10 +252,17 @@ const Register = () => {
                 <option value="1">1st Semester</option>
                 <option value="2">2nd Semester</option>
                 <option value="3">3rd Semester</option>
+                <option value="4">4th Semester</option>
+                <option value="5">5th Semester</option>
+                <option value="6">6th Semester</option>
+                <option value="7">7th Semester</option>
+                <option value="8">8th Semester</option>
               </select>
             </div>
             <div className="mb-3 col-md-6 col-lg-4">
-              <label htmlFor="major" className="form-label fw-bold">Major:</label>
+              <label htmlFor="major" className="form-label fw-bold">
+                Degree:
+              </label>
               <select
                 className="form-select text-center"
                 id="major"
@@ -232,12 +272,62 @@ const Register = () => {
                 required
               >
                 <option value="">Not Selected</option>
-                <option value="computer-science">Computer Science</option>
-                <option value="engineering">Engineering</option>
-                <option value="mathematics">Mathematics</option>
+                <option value="BS Computer Science">BS Computer Science</option>
+                <option value="BS Software Engineering">
+                  BS Software Engineering
+                </option>
+                <option value="BS Artificial Intelligence">
+                  BS Artificial Intelligence
+                </option>
+                <option value="BS Information Technology">
+                  BS Information Technology
+                </option>
+                <option value="BS Textile Engineering">
+                  BS Textile Engineering
+                </option>
+                <option value="BS Polymer Engineering">
+                  BS Polymer Engineering
+                </option>
+                <option value="BS Apparel Manufacturing">
+                  BS Apparel Manufacturing
+                </option>
+                <option value="BS Textile Engineering Technology">
+                  BS Textile Engineering Technology
+                </option>
+                <option value="BS Fashion Design & Technology">
+                  BS Fashion Design & Technology
+                </option>
+                <option value="BS in Textile Design">
+                  BS in Textile Design
+                </option>
+                <option value="BS in Visual Arts">BS in Visual Arts</option>
+                <option value="BS in Animation & Multimedia Design">
+                  BS in Animation & Multimedia Design
+                </option>
+                <option value="BS in Business Administration">
+                  BS in Business Administration
+                </option>
+                <option value="BS in Textile Management & Marketing">
+                  BS in Textile Management & Marketing
+                </option>
+                <option value="BS in Textile & Apparel Merchandising">
+                  BS in Textile & Apparel Merchandising
+                </option>
+                <option value="BS Accounting & Finance">
+                  BS Accounting & Finance
+                </option>
+                <option value="BS Applied Mathematics<">
+                  BS Applied Mathematics
+                </option>
+                <option value="BS Applied Physics">BS Applied Physics</option>
+                <option value="BS Applied Statistics">
+                  BS Applied Statistics
+                </option>
+                <option value="BS Applied Chemistry">
+                  BS Applied Chemistry
+                </option>
               </select>
             </div>
-
           </div>
         );
       default:
@@ -245,24 +335,20 @@ const Register = () => {
     }
   };
 
-
   return (
     <>
       <TopBar />
-      <div className="auth_page pt-2 pt-md-3">
+      <div className="login-panel-container auth_page pt-2 pt-md-3">
         <form onSubmit={handleSubmit} className="px-3 px-md-5 py-4 py-md-5">
-          <h2 className="text-uppercase text-center mb-4">
-            Signup Panel
-          </h2>
-          <div className='row mb-4'>
-
+          <h2 className="text-center mb-4">SignUp</h2>
+          <div className="row mb-4">
             <div className="col-sm-12 col-md-6 mb-3">
               <label htmlFor="fullname" className="form-label">
                 Full name
               </label>
               <input
                 type="text"
-                placeholder="John Smith"
+                placeholder="Ali Raza"
                 className="form-control"
                 id="fullname"
                 onChange={handleChangeInput}
@@ -270,7 +356,6 @@ const Register = () => {
                 name="fullname"
                 required
                 style={{ background: `${alert.fullname ? "#fd2d6a14" : ""} ` }}
-
               />
               <small className="form-text text-danger">
                 {alert.fullname ? alert.fullname : ""}
@@ -283,7 +368,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                placeholder="johnsmith07"
+                placeholder="aliraza1"
                 className="form-control"
                 id="username"
                 onChange={handleChangeInput}
@@ -303,7 +388,7 @@ const Register = () => {
               </label>
               <input
                 type="email"
-                placeholder="john@gmail.com"
+                placeholder="aliraza@gmail.com"
                 className="form-control"
                 id="email"
                 aria-describedby="emailHelp"
@@ -319,9 +404,9 @@ const Register = () => {
             </div>
 
             <div className="col-sm-12 col-md-6 mb-3">
-              <label className="form-label fw-bold">Gender</label>
+              <label className="form-label fw-bold"></label>
               <div className="text-center">
-                <div className="form-check form-check-inline">
+                <div className="form-check form-check-inline mt-2">
                   <input
                     className="form-check-input cursor-pointer"
                     type="radio"
@@ -331,7 +416,12 @@ const Register = () => {
                     defaultChecked
                     onChange={handleChangeInput}
                   />
-                  <label className="form-check-label cursor-pointer" htmlFor="male">Male</label>
+                  <label
+                    className="form-check-label cursor-pointer"
+                    htmlFor="male"
+                  >
+                    Male
+                  </label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input
@@ -342,7 +432,12 @@ const Register = () => {
                     value="female"
                     onChange={handleChangeInput}
                   />
-                  <label className="form-check-label cursor-pointer" htmlFor="female">Female</label>
+                  <label
+                    className="form-check-label cursor-pointer"
+                    htmlFor="female"
+                  >
+                    Female
+                  </label>
                 </div>
               </div>
             </div>
@@ -395,7 +490,6 @@ const Register = () => {
               </small>
             </div>
 
-
             <div className="col-sm-12 col-md-6 mb-3">
               <label htmlFor="cnic" className="form-label">
                 CNIC
@@ -414,7 +508,7 @@ const Register = () => {
 
             <div className="mb-3">
               <label className="form-label fw-bold">Select Role:</label>
-              <div className='text-center'>
+              <div className="text-center">
                 <div className="form-check form-check-inline">
                   <input
                     className="form-check-input cursor-pointer"
@@ -425,7 +519,12 @@ const Register = () => {
                     defaultChecked
                     onChange={handleChangeInput}
                   />
-                  <label className="form-check-label cursor-pointer" htmlFor="teacherRole">Teacher</label>
+                  <label
+                    className="form-check-label cursor-pointer"
+                    htmlFor="teacherRole"
+                  >
+                    Teacher
+                  </label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input
@@ -436,7 +535,12 @@ const Register = () => {
                     value="alumni"
                     onChange={handleChangeInput}
                   />
-                  <label className="form-check-label cursor-pointer" htmlFor="alumniRole">Alumni</label>
+                  <label
+                    className="form-check-label cursor-pointer"
+                    htmlFor="alumniRole"
+                  >
+                    Alumni
+                  </label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input
@@ -447,13 +551,17 @@ const Register = () => {
                     value="student"
                     onChange={handleChangeInput}
                   />
-                  <label className="form-check-label cursor-pointer" htmlFor="studentRole">Student</label>
+                  <label
+                    className="form-check-label cursor-pointer"
+                    htmlFor="studentRole"
+                  >
+                    Student
+                  </label>
                 </div>
               </div>
             </div>
 
             {renderFieldsByRole()}
-
           </div>
 
           <div className="mb-4 text-center">
@@ -476,6 +584,6 @@ const Register = () => {
       </div>
     </>
   );
-}
+};
 
 export default Register;

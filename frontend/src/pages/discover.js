@@ -9,7 +9,7 @@ import { getDataAPI } from '../utils/fetchData';
 const Discover = () => {
   const { auth, discover } = useSelector(state => state);
   const dispatch = useDispatch();
-
+  console.log(discover);
   const [load, setLoad] = useState(false);
 
   useEffect(() => {

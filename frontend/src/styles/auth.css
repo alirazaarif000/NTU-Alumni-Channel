@@ -6,9 +6,30 @@
     justify-content: center;
     align-items: center;
 }
+.login-panel-container{
+        background-image: url('../images/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: 1; 
+        opacity: 0.95;
+      }
+      
+      .login-panel-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background-color: rgba(255, 255, 255, 0.5);   */
+        z-index: -1; /* Place the background overlay below the panel */
+      }
 
 .auth_page form {
-    background: var(--linear-gradient);
+    /* background: var(--linear-gradient); */
+    background-color: rgba(228, 222, 222, 0.137); 
     max-width: 768px;
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -17,9 +38,9 @@
 }
 
 .auth_page .forgetForm {
-    background: var(--linear-gradient);
+    /* background: var(--linear-gradient); */
     max-width: 480px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 12px;
     color: #fff;
     font-weight: bold;
@@ -34,6 +55,7 @@
     border: none;
     border-radius: 6px;
     padding: 6px 16px;
+    background-color: rgba(255, 255, 255, 0.5);
     background: #fff;
     color: #2980b9;
     cursor: pointer;

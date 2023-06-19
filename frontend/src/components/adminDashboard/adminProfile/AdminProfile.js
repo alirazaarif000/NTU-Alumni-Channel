@@ -51,7 +51,7 @@ const AdminProfile = () => {
                 <p>Welcome to your Profile.</p>
             </div>
             <div className="auth_page pt-2 pt-md-3">
-                <form onSubmit={handleSubmit} className="px-3 px-md-5 py-4 py-md-4">
+                <form onSubmit={handleSubmit} className="bg-primary px-3 px-md-5 py-4 py-md-4">
                     <h2 className="text-uppercase text-center mb-4">
                         Admin Profile
                     </h2>

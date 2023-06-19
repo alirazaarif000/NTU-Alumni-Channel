@@ -16,16 +16,20 @@
     font-size: 1.3rem;
 }
 
-
+.home{
+    padding:0px 120px;
+}
 
 /* #endregion */
 
 
 /* #region Posts */
 .posts .card{
-    /* box-shadow: 0 0 5px #ddd; */
+    box-shadow: 0 0 5px #ddd;
 }
-
+.posts-single{
+    padding: 0px 180px;
+}
 /* #endregion */
 
 /* #region Post card's header */

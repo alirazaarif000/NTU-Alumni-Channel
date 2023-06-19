@@ -1,10 +1,10 @@
 const Users = require("../models/userModel");
-const verifier = require('email-verify');
-const formData = require('form-data');
-const Mailgun = require('mailgun.js');
+const verifier = require("email-verify");
+const formData = require("form-data");
+const Mailgun = require("mailgun.js");
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
-  username: 'api',
+  username: "api",
   key: process.env.MAILGUN_API_KEY,
 });
 const bcrypt = require("bcrypt");
@@ -53,7 +53,9 @@ const authCtrl = {
 
       const user_regno = await Users.findOne({ regno });
       if (user_regno && regno !== "") {
-        return res.status(400).json({ msg: "This registeration number already exists." });
+        return res
+          .status(400)
+          .json({ msg: "This registeration number already exists." });
       }
 
       const user_email = await Users.findOne({ email });
@@ -68,7 +70,6 @@ const authCtrl = {
           .status(400)
           .json({ msg: "Password must be at least 6 characters long." });
       }
-
 
       const passwordHash = await bcrypt.hash(password, 12);
 
@@ -91,7 +92,7 @@ const authCtrl = {
 
         major: "",
         semester: "",
-      }
+      };
 
       if (userType === "teacher") {
         newUserObj = {
@@ -99,25 +100,25 @@ const authCtrl = {
           department,
           designation,
           qualification,
-        }
+        };
       } else if (userType === "alumni") {
         newUserObj = {
           ...newUserObj,
           degree,
           regno,
           passingYear,
-        }
+        };
       } else if (userType === "student") {
         newUserObj = {
           ...newUserObj,
           regno,
           major,
           semester,
-        }
+        };
       } else {
-        return res
-          .status(400)
-          .json({ msg: "User type include only ['teacher', 'alumni', 'student']" });
+        return res.status(400).json({
+          msg: "User type include only ['teacher', 'alumni', 'student']",
+        });
       }
 
       const newUser = new Users(newUserObj);
@@ -148,19 +149,31 @@ const authCtrl = {
   },
   forgetpassword: async (req, res) => {
     try {
-
       const { email } = req.body;
 
       // Verify if the email exists in the real world
-      verifier.verify(email, (err, info) => {
-        if (err || !info.success) {
-          return res.status(404).json({ msg: "Can't send mail to non-existing email address." });
-        }
-      })
+      // const verifyPromise = new Promise((resolve, reject) => {
+      //   verifier.verify(email, (err, info) => {
+      //     if (err || !info.success) {
+      //       reject(
+      //         err || new Error("Can't send mail to non-existing email address.")
+      //       );
+      //     } else {
+      //       resolve(info);
+      //     }
+      //   });
+      // });
+
+      // const info = await verifyPromise;
+      // if (!info.success) {
+      //   return res
+      //     .status(404)
+      //     .json({ msg: "Can't send mail to non-existing email address." });
+      // }
 
       const user = await Users.findOne({ email });
       if (!user) {
-        return res.status(404).json({ msg: 'Email not found.' });
+        return res.status(404).json({ msg: "Email not found." });
       }
 
       const newPassword = generateRandomPassword(8);
@@ -171,15 +184,15 @@ const authCtrl = {
       const data = {
         from: `Mailgun Sandbox <postmaster@${process.env.SANDBOX_EMAIL_ADDRESS}>`,
         to: email,
-        subject: 'Password Reset',
+        subject: "Password Reset",
         text: `Your new password is: ${newPassword}`,
       };
 
       await mg.messages.create(`${process.env.SANDBOX_EMAIL_ADDRESS}`, data);
-      res.json({ msg: 'Password reset email sent successfully.' });
+      res.json({ msg: "Password reset email sent successfully." });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: 'Internal server error.' });
+      return res.status(500).json({ msg: "Internal server error." });
     }
   },
   changePassword: async (req, res) => {
@@ -201,11 +214,12 @@ const authCtrl = {
 
       const newPasswordHash = await bcrypt.hash(newPassword, 12);
 
-      await Users.findOneAndUpdate({ _id: req.user._id }, { password: newPasswordHash },
+      await Users.findOneAndUpdate(
+        { _id: req.user._id },
+        { password: newPasswordHash }
       );
 
-      res.json({ msg: "Password updated successfully." })
-
+      res.json({ msg: "Password updated successfully." });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -244,7 +258,7 @@ const authCtrl = {
         password: passwordHash,
         gender,
         role: "admin",
-        userType: "admin"
+        userType: "admin",
       });
 
       await newUser.save();
@@ -288,16 +302,19 @@ const authCtrl = {
       }
 
       if (user.status !== "verified") {
-        return res.status(400).json({ msg: "Your account is disabled. Please contact the administrator." });
+        return res.status(400).json({
+          msg: "Please Contact Admin, Your Account is Unverified or Disabled.",
+        });
       }
 
       const access_token = createAccessToken({ id: user._id });
+      // console.log(access_token)
       const refresh_token = createRefreshToken({ id: user._id });
 
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/api/refresh_token",
-        sameSite: 'lax',
+        sameSite: "lax",
         maxAge: 30 * 24 * 60 * 60 * 1000, //validity of 30 days
       });
 
@@ -330,7 +347,9 @@ const authCtrl = {
       }
 
       if (user.status !== "verified") {
-        return res.status(400).json({ msg: "Your account is disabled. Please contact the administrator." });
+        return res.status(400).json({
+          msg: "Please Contact Admin, Your Account is Unverified or Disabled.",
+        });
       }
 
       const access_token = createAccessToken({ id: user._id });

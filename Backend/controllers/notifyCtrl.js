@@ -1,4 +1,4 @@
-const Notifies = require('../models/notifyModel');
+const Notifies = require("../models/notifyModel");
 
 const notifyCtrl = {
   createNotify: async (req, res) => {
@@ -51,11 +51,13 @@ const notifyCtrl = {
 
   isReadAllMessageNotify: async (req, res) => {
     try {
-      const notifies = await Notifies.updateMany(
+      await Notifies.updateMany(
         { recipients: req.user._id, type: "textMessage" },
-        { isRead: true },
+        { isRead: true }
       );
-    
+
+      const notifies = await Notifies.find();
+
       return res.json({ notifies });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -68,7 +70,7 @@ const notifyCtrl = {
         { _id: req.params.id },
         {
           isRead: true,
-        },
+        }
       );
 
       return res.json({ notifies });

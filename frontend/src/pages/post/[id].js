@@ -20,7 +20,7 @@ const Post = () => {
     }, [detailPost, dispatch, id, auth]);
 
     return (
-        <div className="posts">
+        <div className="posts-single">
             {
                 post.length === 0 &&
                 <div className="text-center p-2 "><img width={30} src={LoadIcon} alt="Loading" /></div>

@@ -34,7 +34,7 @@ const RegisterAdmin = () => {
         <p>Welcome to your Admin Signup Panel.</p>
       </div>
       <div className="auth_page pt-2 pt-md-3">
-        <form onSubmit={handleSubmit} className="px-3 px-md-5 py-4 py-md-5">
+        <form onSubmit={handleSubmit} className="bg-primary px-3 px-md-5 py-4 py-md-5">
           <h2 className="text-uppercase text-center mb-4">
             Admin Panel
           </h2>

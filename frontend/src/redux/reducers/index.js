@@ -15,7 +15,7 @@ import suggestions from "./suggestionsReducer";
 import socket from "./socketReducer";
 import notify from "./notifyReducer";
 import message from "./messageReducer";
-
+import job from "./jobReducer";
 export default combineReducers({
   auth,
   alert,
@@ -32,4 +32,5 @@ export default combineReducers({
   socket,
   notify,
   message,
+  job
 });

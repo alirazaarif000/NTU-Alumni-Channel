@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteDataAPI, patchDataAPI, postDataAPI } from '../../utils/fetchData';
-import { GLOBALTYPES } from '../../redux/actions/globalTypes';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteDataAPI,
+  patchDataAPI,
+  postDataAPI,
+} from "../../utils/fetchData";
+import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 
 const JobsModal = ({ job, jobs, setJobs }) => {
   const { auth } = useSelector((state) => state);
@@ -13,7 +17,7 @@ const JobsModal = ({ job, jobs, setJobs }) => {
     const { name, value } = e.target;
     setJobPostData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -42,7 +46,7 @@ const JobsModal = ({ job, jobs, setJobs }) => {
       });
     }
 
-    setPostModal(!postModal)
+    setPostModal(!postModal);
   };
 
   const handleDelete = async () => {
@@ -62,16 +66,29 @@ const JobsModal = ({ job, jobs, setJobs }) => {
         payload: { error: err.response.data.msg },
       });
     }
-    setPostModal(!postModal)
+    setPostModal(!postModal);
   };
 
   return (
-    <div className="modal fade" id={`jobModal${job._id}`} tabIndex="-1" aria-labelledby={`jobModalLabel${job._id}`} aria-hidden="true">
+    <div
+      className="modal fade"
+      id={`jobModal${job._id}`}
+      tabIndex="-1"
+      aria-labelledby={`jobModalLabel${job._id}`}
+      aria-hidden="true"
+    >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id={`jobModalLabel${job._id}`}>Job Details</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 className="modal-title" id={`jobModalLabel${job._id}`}>
+              Job Details
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div className="modal-body">
             <div className="mb-3">
@@ -118,28 +135,28 @@ const JobsModal = ({ job, jobs, setJobs }) => {
             </div>
             <div className="mb-3">
               <label htmlFor="description" className="form-label">
-                Description
+                Job Alphabets
               </label>
               <input
                 type="description"
                 className="form-control"
                 id="description"
                 name="description"
-                value={jobPostData.description}
+                value={jobPostData.alphabets}
                 onChange={handleJobDataInput}
                 required
               />
             </div>
             <div className="mb-3">
               <label htmlFor="requirements" className="form-label">
-                Requirements
+                Duration
               </label>
               <input
                 type="requirements"
                 className="form-control"
                 id="requirements"
                 name="requirements"
-                value={jobPostData.requirements}
+                value={jobPostData.duration}
                 onChange={handleJobDataInput}
                 required
               />
@@ -158,11 +175,44 @@ const JobsModal = ({ job, jobs, setJobs }) => {
                 required
               />
             </div>
+            <div className="mb-3">
+              <label htmlFor="salary" className="form-label">
+                Job Link
+              </label>
+              <input
+                type="link"
+                className="form-control"
+                id="link"
+                name="link"
+                value={jobPostData.link}
+                onChange={handleJobDataInput}
+                required
+              />
+            </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-warning" onClick={handleUpdate}>Update</button>
-            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={handleUpdate}
+            >
+              Update
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              data-bs-dismiss="modal"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
